@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2 </title>
+</head>
+
+<body>
+    <script>
+
+        async function evaluateExpression(expression) {
+            // expression = encodeURIComponent(expression) ;
+            const response = await fetch(`https://api.mathjs.org/v4/evaluate?expr=${expression}`);
+            if (!response.ok) {
+                throw new Error(`Error fetching expression: ${response.status}`);
+            }
+            // console.log(response) ;
+            const data = await response.json();
+            // console.log(data) ;
+            return data;
+        }
+
+        //we can take input from user also 
+        //But, here we are hard coding it
+        const expressions = [
+            '2*4*4',
+            '- 5/(7-5)',
+            'sqrt(5^2-4^2)',
+            'sqrt(5^2*4^2)',
+            '1*2*3*4*5'
+        ];
+
+        async function start() {
+            //these for loop will traverse through our array 
+            for (const expression of expressions) {
+                try {
+                    // for each line of expression result will give us ans 
+                    const result = await evaluateExpression(expression);
+                    console.log(`${expression} => ${result}`);
+
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+        //for initial start 
+        start();
+
+    </script>
+</body>
+
+</html>
